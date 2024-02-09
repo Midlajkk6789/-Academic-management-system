@@ -1,0 +1,256 @@
+{% include 'head.html' %}
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+ {% include 'nav.html' %}
+  <!-- /.navbar -->
+  
+  <script>
+    function toggle(source) {
+      checkboxes = document.getElementsByName('subCheckbox');
+       for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+    }
+  </script>
+  <!-- Main Sidebar Container -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>General Form</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">General Form</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-4">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Subjects</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form method='post'>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Subject Name</label>
+                    <input type="text" name='SubjectName' class="form-control" id="exampleInputEmail1" placeholder="Enter Your Subject">
+                  </div>
+                  <div class="form-check">
+                    <input class="mainCheckbox"onchange="toggle(this)" type="checkbox">
+                    <label class="form-check-label">Select All</label>
+                  </div>
+                  {% for i in record %}
+                  <div class="form-check">
+                    <input class="subCheckbox"  name='subCheckbox' value='{{i.id}}' type="checkbox">
+                    <label class="form-check-label">{{i.className }}</label>
+                  </div>
+                 {% endfor %}
+
+                
+                 
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submitt</button>
+                </div>
+              </form>
+            </div>
+      
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-8">
+            <!-- Form Element sizes -->
+            
+              
+              
+                
+              
+
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">DataTable with default features</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                          <th>S NO</th>
+                          <th>Subject</th>
+                  
+                          <th>Status</th>
+                          <th>Action</th>
+                          <!-- <th>CSS grade</th> -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {% for i in data %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{i.subjectName}}</td>
+                      
+                          <td><span class="badge badge-success">Success</span></td>
+                          <td> <a class="btn btn-info btn-sm" onclick='SubjectM({{i.id}})' >
+                            <i id='spin{{i.id}}' class="fas fa-pencil-alt">
+                             </i>
+                            Edit
+                        </a>  <a class="btn btn-danger btn-sm" href="#" onclick="deletMessage()">
+                          <i class="fas fa-trash">
+                          </i>
+                            Delete
+                      </a></td>
+                        
+                        </tr>
+                        {% endfor %}
+                     
+                        </tfoot>
+                      </table>
+
+                      <div class="modal fade" id="modal-default">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Edit Subject</h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>
+                               
+                             <div class='form-group row'>
+                               <div class='col-sm-6'>
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1"> Subject</label>
+                                  <input type="text" class="form-control" id="SubjectMName" placeholder="Enter Subject name">
+                                </div>
+                              </div>
+                              <div class='col-sm-6'>
+                                
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Status</label>
+                                  <select name="status" class="custom-select" id="SubjectMStatus" placeholder="Enter Qualification">
+                                    <option value="1">Active</option>
+                                    <option value="0">Deactive</option>
+                                  </select>
+                                </div>
+                              </div>
+                           </div>
+
+                           <div class='form-group row'>
+                            <div class='col-sm-6'>
+                           {% for i in record %}
+                  <div class="form-check">
+                    <input class="subCheckbox"  name='subCheckbox' value='{{i.id}}' type="checkbox">
+                    <label class="form-check-label">{{i.className }}</label>
+                  </div>
+                 {% endfor %}
+
+                </div>
+                <div class='col-sm-6'>
+
+
+
+                </div>
+              </div>
+
+
+
+                              </p>
+                            </div>
+                            <input type='hidden' id='Subjectid'>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+               
+               
+                
+
+                
+                
+              </div>
+
+              
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+              </div>
+              <!-- /.card-body -->
+            </div>
+           
+          
+          <!--/.col (right) -->
+        
+        <!-- /.row -->
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% include 'footer.html' %}
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+<!-- jQuery -->
+{% include 'scripts.html'%}
+<!-- Page specific script -->
+<script>
+$(function () {
+  bsCustomFileInput.init();
+
+  $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+});
+
+
+</script>
+</body>
+</html>
